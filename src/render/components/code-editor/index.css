@@ -1,0 +1,12 @@
+#code-editor-body{
+  height: 100%;
+  width: 100%;
+}
+.CodeMirror{ /* 覆盖 CodeMirror 样式，此类名实际只存在与第三方 CodeMirror 组件里*/
+  border-radius: 0 !important;
+  padding: 0px !important;
+  margin:0px !important;
+  overflow-x: scroll;
+  caret-color:white !important; 
+}
+ 

@@ -1,0 +1,15 @@
+#sider{
+  background-color: white;
+  height: 100%;
+  border-right: solid 1.2px #bbb;
+}
+#sider #repo-name{
+  padding: 10px;
+  height: 2rem;
+  background-color: #eee;
+  width: 100%;
+  text-overflow: ellipsis;
+}
+#sider #repo-icon{
+  width: 20px;
+}

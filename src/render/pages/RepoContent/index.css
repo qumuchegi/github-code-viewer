@@ -1,0 +1,15 @@
+#repo-content{
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top:4rem;
+  width:100%;
+  height: calc(100% - 4rem);
+}
+#left,#right{
+  height:100%;
+  width: 100%;
+}
+.gutter.gutter-horizontal {
+  cursor: ew-resize;
+}

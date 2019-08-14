@@ -1,0 +1,11 @@
+{ 
+  "presets": [
+  ], 
+  "plugins": [
+      ["import", { // babel-plugin-import ，按需加载  antd 组件
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": "css" // `style: true` 会加载 less 文件
+      }]
+  ] 
+}
