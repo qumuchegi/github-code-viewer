@@ -12,11 +12,15 @@ import api from '../../api'
 
 let { readLocalFile } = api
 
-export default function CodeEditor ({fileShow2Editor_path, width}) {
+export default function CodeEditor ({fileShow2Editor_path}) {
     const [codeValue, setCodeValue] = useState()
+    const [width, setWidth] = useState()
 
     useEffect(() => {
-      console.log(document.getElementById('left-split').offsetWidth)
+      let leftWidth = document.getElementById('left-split').offsetWidth
+      let bodyWidth = document.getElementById('header').offsetWidth
+      setWidth((bodyWidth - leftWidth) / bodyWidth)
+
       getFileContent(fileShow2Editor_path)
     }, [fileShow2Editor_path])
 
@@ -44,6 +48,7 @@ export default function CodeEditor ({fileShow2Editor_path, width}) {
       <div id="code-editor-body" >
         <CodeMirror 
           options={options}
+          width={width}
           value={codeValue} />
       </div>
     )

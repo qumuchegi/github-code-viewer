@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Tray } = require('electron');
+const { app, BrowserWindow, ipcMain, Tray, Menu } = require('electron');
 const path = require('path')
 const routes = require('./server-routes/routes')
 
@@ -10,14 +10,33 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-
+let tray = null
 const createWindow = () => {
-  //let tray = new Tray('./G.png')
+
+  tray = new Tray( path.join(__dirname,'/app.ico' ) )
+  const contextMenu = Menu.buildFromTemplate([
+    { 
+      label: '退出',
+      click: () => app.quit()
+     },
+    { 
+      label: '关于', 
+      click: () => {}
+     }
+  ])
+
+  // tray.setImage(path.join(__dirname,'/G.png' ))
+  // Make a change to the context menu
+  contextMenu.items[1].checked = false
+
+  // Call this again for Linux because we modified the context menu
+  tray.setContextMenu(contextMenu)
+ 
   // Create the browser window.
   mainWindow = new BrowserWindow({
     minWidth: 900,
     minHeight: 600,
-    icon: './app.ico',
+    //icon: path.join(__dirname,'/G.png' ) ,
     webPreferences:{
       preload: path.join(__dirname,'/preload.js' ) 
       /*

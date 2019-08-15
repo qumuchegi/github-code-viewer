@@ -5,6 +5,10 @@ const repos = (state=[], action) => {
     case 'STORE_NEW_REPO_INFO': return [...state, action.payload];
     case 'STORE_HISTORY_REPOS_INFO': return [...state, ...action.payload]
     case 'CLEAR_REPO_INFO': return [];
+    case 'REMOVE_A_REPO': 
+      let newRepos = state.filter(el => el.repoID !== action.payload)
+      console.log('删除后：', newRepos)
+      return newRepos;
     default: return state
   }
 }

@@ -10,5 +10,13 @@ export default {
   showRepoContent: (repoID) => ({
     type: 'SHOW_REPO_CONTENT',
     payload: repoID
+  }),
+  removeARepo: (repoID) => ({
+    type: 'REMOVE_A_REPO',
+    payload: repoID
+  }),
+  hideRepo: (repoID) => ({
+    type: 'HIDE_REPO_CONTENT',
+    payload: repoID
   })
 }

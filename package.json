@@ -1,6 +1,6 @@
 {
-  "name": "github-prj-viewer",
-  "productName": "github-prj-viewer",
+  "name": "github-repo-viewer",
+  "productName": "github-repo-viewer",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",
@@ -24,7 +24,12 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "github_prj_viewer"
+            "name": "github_repo_viewer",
+            "iconUrl": "./app.ico",
+            "setupIcon": "./app.ico",
+            "description": "GitHub 仓库代码浏览",
+            "exe": "github_repo_viewer",
+            "version": "1.0.0"
           }
         },
         {
@@ -35,11 +40,38 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {
+            "icon": "./app.ico",
+            "name": "github_repo_viewer",
+            "productDescription": "GitHub 仓库代码浏览",
+            "productName": "github_repo_viewer",
+            "version": "1.0.0"
+          }
         },
         {
           "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "config": {
+            "icon": "./app.ico",
+            "description": "GitHub 仓库代码浏览",
+            "name": "github_repo_viewer",
+            "productDescription": "GitHub 仓库代码浏览",
+            "productName": "github_repo_viewer",
+            "version": "1.0.0"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-dmg",
+          "config": {
+            "format": "ULFO",
+            "name": "github_repo_viewer",
+            "icon": "./app.ico"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-appx",
+          "config": {
+            "expandedBaseImage": "./app.ico"
+          }
         }
       ],
       "plugins": [
@@ -63,7 +95,9 @@
     }
   },
   "dependencies": {
+    "@electron-forge/maker-pkg": "^6.0.0-beta.44",
     "@uiw/react-codemirror": "^1.0.26",
+    "D": "^1.0.0",
     "antd": "^3.21.4",
     "codemirror": "^5.48.2",
     "electron-squirrel-startup": "^1.0.0",
@@ -83,7 +117,9 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@electron-forge/cli": "6.0.0-beta.43",
+    "@electron-forge/maker-appx": "^6.0.0-beta.44",
     "@electron-forge/maker-deb": "6.0.0-beta.43",
+    "@electron-forge/maker-dmg": "^6.0.0-beta.44",
     "@electron-forge/maker-rpm": "6.0.0-beta.43",
     "@electron-forge/maker-squirrel": "6.0.0-beta.43",
     "@electron-forge/maker-zip": "6.0.0-beta.43",

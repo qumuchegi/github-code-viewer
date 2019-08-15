@@ -3,12 +3,18 @@
   height: 100%;
   border-right: solid 1.2px #bbb;
 }
-#sider #repo-name{
+#sider #repo-name-container>div{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   padding: 10px;
   height: 2rem;
   background-color: #eee;
-  width: 100%;
-  text-overflow: ellipsis;
+}
+#repo-name{
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
 }
 #sider #repo-icon{
   width: 20px;

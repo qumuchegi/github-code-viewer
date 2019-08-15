@@ -6,7 +6,7 @@
   border-radius: 0 !important;
   padding: 0px !important;
   margin:0px !important;
-  overflow-x: scroll;
+  overflow-x: scroll !important;
   caret-color:white !important; 
 }
  

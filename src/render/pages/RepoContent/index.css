@@ -6,10 +6,19 @@
   width:100%;
   height: calc(100% - 4rem);
 }
-#left,#right{
+#left-split,#right-split{
   height:100%;
+  min-width: 200px;
   width: 100%;
 }
-.gutter.gutter-horizontal {
-  cursor: ew-resize;
+.show{
+  display: block;
+}
+.hide{
+  display: none !important;
+}
+img#start-app-img{
+  display: block;
+  width: 600px;
+  margin: auto;
 }

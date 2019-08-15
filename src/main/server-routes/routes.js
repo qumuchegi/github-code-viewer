@@ -38,7 +38,10 @@ module.exports = {
         }
 
         client.get('repos/' + username_reponame + '/branches', {},  (err, status, body, headers) => { // 获取所有分支数组
-          if (err) throw err
+          if (err) {
+            console.log(err)
+            throw err
+          }
           else if(status === 200) {
             resBody = {...resBody, branches: body}
 

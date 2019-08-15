@@ -22,7 +22,7 @@
 
 1. 使用 [create-electron-app](https://www.electronforge.io/) 脚手架快速开始 electron 的开发环境: `npx create-electron-app Github-code-viewer --template=webpack`
 
-2. 为了增加 GitHub API 调用上限，需要到github的setting-develop-generate token，创建一个token，然后在发起 API 请求前设置 token：
+2. 为了增加 GitHub API 调用上限，需要到github的setting > develop > generate token，创建一个token，然后在发起 API 请求前设置 token：
 ```js
 const {github_token} = require('../../config')
 let client = github.client(github_token)

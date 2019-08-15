@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
-import {connect} from 'react-redux';
+import {connect} from 'react-redux'
 import { Modal, Form, Input, Menu, Dropdown,message } from 'antd'
+const { SubMenu } = Menu;
 import uuid from 'uuid'
 
 import api from '../../api'
@@ -16,10 +17,13 @@ import dispatches from './dispatch'
 let {
   dispatch_storeNewRepo,
   dispatch_storeHistoryRepos,
-  dispatch_showRepoContent
+  dispatch_showRepoContent,
+  dispatch_removeARepo,
+  dispatch_hideRepo
 } = dispatches
 
 import storeMethods from './store'
+
 let {
   getRepoInfoFromRedux,
   getAllReposInfoFromRedux,
@@ -66,7 +70,7 @@ function Header () {
         // setRepoInfo(newRepoInfo) // useState
 
         dispatch_storeNewRepo(newRepoInfo) // redux
-        localStorage.setItem(repoID + uuid(), JSON.stringify(newRepoInfo))
+        localStorage.setItem(repoID, JSON.stringify(newRepoInfo))
 
         setCloneLoding(false)
 
@@ -118,25 +122,41 @@ function Header () {
     console.log('Redux 存储要现实内容的repoID:', getRepoIDWillShowContent())
   }
 
+  function removeRepo(id) {
+    console.log(id)
+    //console.log(getAllReposInfoFromRedux())
+    localStorage.removeItem(id)
+    dispatch_removeARepo(id)
+    dispatch_hideRepo(id)
+    let newRepos = historyRepos_IDWidthuuid_and_Avatar.filter(el => el.id !== id)
+    setHistoryRepos_IDWidthuuid_and_Avatar(newRepos)
+
+  }
+
   const getRepoDialogTitle = 
     <div id="login-dialog-title">
       <span>获取 GitHub 仓库</span>
       <img src={githubIcon} id="github-icon"></img>
     </div>
 
+  const RepoButton = el => 
+  <div className="repo-menu-item"  onClick={()=>showRepoContent(el.id)}>
+    <img 
+        src={el.avatar} 
+        className="history-repo-avatar" 
+    />
+    <span className="reponame">{el.repoName}</span>
+  </div>
+
   const historyReposMenu = (repos) => 
     <Menu>
       {
         repos.map(el => 
-          <Menu.Item key={uuid()}>
-            <div className="repo-menu-item"  onClick={()=>showRepoContent(el.id)}>
-              <img 
-                  src={el.avatar} 
-                  className="history-repo-avatar" 
-              />
-              <span className="reponame">{el.repoName}</span>
-            </div>
-          </Menu.Item>
+          <SubMenu title={RepoButton(el)} key={uuid()}>
+            <Menu.Item >
+              <div className="remove-repo-button" onClick={()=> removeRepo(el.id)}>删除</div>
+            </Menu.Item>
+          </SubMenu>
         )
       }
     </Menu>
@@ -227,6 +247,6 @@ function Header () {
 }
 
 const mapStateToProps = (state) => ({
-  //fileShow2Editor_path: state.prjTreeReducer.fileShow2Editor_Path
+  
 })
 export default connect(mapStateToProps)(Header)
