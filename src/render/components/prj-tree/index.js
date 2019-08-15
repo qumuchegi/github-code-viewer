@@ -22,7 +22,7 @@ export default function PrjTree ({dirPaths}) {
   }
 
   function dynamicCreateChildrenTree (dirPaths) { // 使用递归 动态生成子目录树
-    let children = dirPaths.sort((a,b) => a<b)
+    let children = dirPaths.sort((a,b) => a-b)
     .map(el => 
         el.type === 1 ?
         <TreeNode 

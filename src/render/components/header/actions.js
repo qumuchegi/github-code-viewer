@@ -18,5 +18,9 @@ export default {
   hideRepo: (repoID) => ({
     type: 'HIDE_REPO_CONTENT',
     payload: repoID
+  }),
+  addLocalRepo: (dirPath) => ({
+    type: 'ADD_DIR_REPO',
+    payload: dirPath
   })
 }

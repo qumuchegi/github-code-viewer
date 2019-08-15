@@ -23,7 +23,16 @@ const repoIDWillShowContent = (state='', action) => {
   }
 }
 
+const localRepoDirPath = (state="", action) => {
+  switch (action.type) {
+    case "ADD_DIR_REPO": return action.payload;
+    case "HIDE_REPO_CONTENT": return "";
+    default: return state;
+  }
+}
+
 export default combineReducers({
   repos,
-  repoIDWillShowContent
+  repoIDWillShowContent,
+  localRepoDirPath
 })

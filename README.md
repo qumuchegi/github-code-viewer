@@ -34,10 +34,48 @@ let client = github.client(github_token)
 
 ## 亮点
 
-1. 使用递归解决了文件树在页面的渲染和读取目录树的文件内容
+1. 使用递归解决了读取目录树的文件内容和文件树在页面的渲染：
+```js
+function dynamicCreateChildrenTree (dirPaths) { // 使用递归 动态生成子目录树
+    let children = dirPaths.sort((a,b) => a-b)
+    .map(el => 
+        el.type === 1 ?
+        <TreeNode 
+          isLeaf={true} 
+          title={el.name} 
+          key={el.path}></TreeNode>
+        :
+        <TreeNode 
+          isLeaf={false}  
+          title={el.name} 
+          key={el.path} 
+         >
+           {
+            dynamicCreateChildrenTree(el.pathsArr)
+           }
+        </TreeNode>
+      )
+   //console.log(children)
+    return children
+  }
+
+  return(
+    <div id="prj-tree">
+      <DirectoryTree 
+        multiple 
+        defaultExpandAll 
+        onSelect={onSelect} 
+        onExpand={onExpand}
+      >
+        {dynamicCreateChildrenTree(dirPaths)}
+      </DirectoryTree>
+    </div>
+  )
+```
 
 2. 使用 React 模拟前端，Node.js 模拟后端 API，Electron 链接了两者，借用 Electron 的 ipc 进程通信模拟了前后端 api 通信。
 
+3. 
 ## 疑问
 
 1. 打包应用的时候对图片不能用 file-loader, 只能用 url-loader 生成 data url, 否则应用里图片显示有问题。

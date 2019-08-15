@@ -90,34 +90,22 @@ readLocalDir_OR_FileWithPath = ({path: localpath}) => {
     function readDir(localpath) {
       //console.log(localpath)
       return new Promise((resolve_1, reject_1) => {
-        fs.readdir(localpath,{ withFileTypes:true },(err, filesORDirs) => {
-          //console.log('读取path: ', filesORDirs) 
-          let length = filesORDirs.length
-          //console.log('length: ', length)
-          let withTypeFromSymbol = []
-          filesORDirs.forEach((el) => { // 需要把属性名为 symbol 类型的文件类型改成字符串类型
-            let type = el[Object.getOwnPropertySymbols(el)[0]]
-  
-            if (type === 1) { // 文件
-              el = {
-                name: el.name,
-                type,
-                path: localpath + '/' + el.name
-              }
-              withTypeFromSymbol.push(el)
-              --length
-              //console.log('变化中的 length: ', length)
-              if(length === 0) {
-                resolve_1(withTypeFromSymbol)
-              }
-            } else { // 文件夹
-              readDir(localpath + '/' + el.name)
-              .then(pathsarr => {
+        try{
+          fs.readdir(localpath,{ withFileTypes:true },(err, filesORDirs) => {
+            //console.log('读取path: ', filesORDirs) 
+            console.log(filesORDirs)
+            if ( !filesORDirs ) return reject_1()
+            let length = filesORDirs.length
+            //console.log('length: ', length)
+            let withTypeFromSymbol = []
+            filesORDirs.forEach((el) => { // 需要把属性名为 symbol 类型的文件类型改成字符串类型
+              let type = el[Object.getOwnPropertySymbols(el)[0]]
+    
+              if (type === 1) { // 文件
                 el = {
                   name: el.name,
                   type,
-                  path: localpath + '/' + el.name,
-                  pathsArr: pathsarr
+                  path: localpath + '/' + el.name
                 }
                 withTypeFromSymbol.push(el)
                 --length
@@ -125,10 +113,28 @@ readLocalDir_OR_FileWithPath = ({path: localpath}) => {
                 if(length === 0) {
                   resolve_1(withTypeFromSymbol)
                 }
-              })
-            }
+              } else { // 文件夹
+                readDir(localpath + '/' + el.name)
+                .then(pathsarr => {
+                  el = {
+                    name: el.name,
+                    type,
+                    path: localpath + '/' + el.name,
+                    pathsArr: pathsarr
+                  }
+                  withTypeFromSymbol.push(el)
+                  --length
+                  //console.log('变化中的 length: ', length)
+                  if(length === 0) {
+                    resolve_1(withTypeFromSymbol)
+                  }
+                })
+              }
+            })
           })
-        })
+      } catch (err) {
+        console.log(err)
+      }
       })
     }
   })

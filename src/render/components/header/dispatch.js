@@ -2,7 +2,7 @@ import utils from '../../../utils'
 let { dispatch }= utils.storeUtils
 
 import actions from './actions'
-let {storeNewRepo, storeHistoryRepo, showRepoContent, removeARepo, hideRepo} = actions
+let {storeNewRepo, storeHistoryRepo, showRepoContent, removeARepo, hideRepo, addLocalRepo} = actions
 
 export default {
   dispatch_storeNewRepo: (action_payload) => {
@@ -19,5 +19,8 @@ export default {
   },
   dispatch_hideRepo: (action_payload) => {
     dispatch(hideRepo(action_payload))
+  },
+  dispatch_addLocalRepo: (action_payload) => {
+    dispatch(addLocalRepo(action_payload))
   }
 }

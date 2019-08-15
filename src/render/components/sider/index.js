@@ -16,13 +16,14 @@ let {
 
 const mapStateToProps = (state, ownProps) =>{
   return{
-    repoIDWillShowContent: state.headerReducer.repoIDWillShowContent
+    repoIDWillShowContent: state.headerReducer.repoIDWillShowContent,
+    localRepoDirPath: state.headerReducer.localRepoDirPath
   }
 }
 
 export default connect(mapStateToProps)(Sider)
 
-function Sider ({repoIDWillShowContent}) {
+function Sider ({repoIDWillShowContent, localRepoDirPath}) {
   const [dirPaths, setDirPaths] = useState([])
   const [repoInfo, setRepoInfo] = useState(null)
 
@@ -33,20 +34,34 @@ function Sider ({repoIDWillShowContent}) {
       setRepoInfo(null)
     }
     readLocalDirPath()
-  }, [repoIDWillShowContent])
+  }, [repoIDWillShowContent, localRepoDirPath])
 
   function readLocalDirPath () {
-    if (!repoIDWillShowContent) return
-    let repoInfo = getRepoInfoFromRedux(repoIDWillShowContent)
-    setRepoInfo(repoInfo)
-    let repo_localPath = repoInfo.localFolder
-    //console.log(getRepoInfoFromRedux(repoID).localFolder)
-    readDirAndFile({
-      path: repo_localPath, 
-      cb:(res) => {
-        setDirPaths(res)
+    if (!repoIDWillShowContent) {
+      if (localRepoDirPath) {
+        let repoInfo = {repoName: localRepoDirPath}
+        setRepoInfo(repoInfo)
+
+        readDirAndFile({
+          path: localRepoDirPath, 
+          cb:(res) => {
+            console.log(res)
+            setDirPaths(res)
+          }
+        })
       }
-    })
+    } else {
+      let repoInfo = getRepoInfoFromRedux(repoIDWillShowContent)
+      setRepoInfo(repoInfo)
+      let repo_localPath = repoInfo.localFolder
+      //console.log(getRepoInfoFromRedux(repoID).localFolder)
+      readDirAndFile({
+        path: repo_localPath, 
+        cb:(res) => {
+          setDirPaths(res)
+        }
+      })
+    }
   }
 
   return (

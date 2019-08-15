@@ -7,11 +7,12 @@ import uuid from 'uuid'
 import api from '../../api'
 
 import './index.css'
-import AddImg from '../../../static/Add.png'
+import AddImg from '../../../static/cloud download.png'
 import githubIcon from '../../../static/github.png'
 import moreIcon from '../../../static/more.png'
 import historyImg from '../../../static/history.png'
 import devloperImg from '../../../static/devloper.png'
+import localFileImg from '../../../static/local.png'
 
 import dispatches from './dispatch'
 let {
@@ -19,7 +20,8 @@ let {
   dispatch_storeHistoryRepos,
   dispatch_showRepoContent,
   dispatch_removeARepo,
-  dispatch_hideRepo
+  dispatch_hideRepo,
+  dispatch_addLocalRepo
 } = dispatches
 
 import storeMethods from './store'
@@ -34,6 +36,7 @@ let {
 
 function Header () {
   const [showAddRepoDialog, setShowAddRepoDialog] = useState(false)
+  const [showAddLocalRepoDialog, setShowAddLocalRepoDialog] = useState(false)
   const [repoUrl, setRepoUrl] = useState('')
   const [localFolder, setLocalFolder] = useState('')
   const [cloneLoding, setCloneLoding] = useState(false)
@@ -112,7 +115,7 @@ function Header () {
 
   function readDirPath (e) {
     e.persist() // 处于安全考虑， 浏览器会将 path 读成 C://fakepath/XXX，这里使用  e.persist() 可以避免此种情况，读出真实的 path
-    //console.log(e.target.files[0].path, inputShowDirPath.current)
+    console.log(e.target.files[0].path, inputShowDirPath.current)
     setLocalFolder(e.target.files[0].path) // 仓库文件将要放置的位置
   }
 
@@ -133,9 +136,22 @@ function Header () {
 
   }
 
+  function addLocalRepo() {
+    console.log(localFolder)
+    dispatch_addLocalRepo(localFolder)
+    setShowAddLocalRepoDialog(false)
+    setLocalFolder('')
+  }
+
   const getRepoDialogTitle = 
     <div id="login-dialog-title">
       <span>获取 GitHub 仓库</span>
+      <img src={githubIcon} id="github-icon"></img>
+    </div>
+
+  const addLocalRepoDialogTitle =
+    <div id="login-dialog-title">
+      <span>获取本地仓库</span>
       <img src={githubIcon} id="github-icon"></img>
     </div>
 
@@ -187,7 +203,7 @@ function Header () {
             <Input 
               type="text" 
               placeholder='https://github.com/[username]/[reponame].git'
-              onChange={(e) => setRepoUrl(e.target.value)} 
+              onChange={cancelGetRepo} 
               className="input"/>
           </Form.Item>
           <Form.Item label="本地文件夹">
@@ -196,9 +212,9 @@ function Header () {
               webkitdirectory="true" // 读取文件夹而不是文件
               directory="true" // 读取文件夹而不是文件
               onInput={(e) => readDirPath(e)} 
-              id="read-dir"/>
+              id="read-dir1"/>
             <label 
-              htmlFor="read-dir" 
+              htmlFor="read-dir1" 
               id="read-dir-path">
               <Input 
                 type="text" 
@@ -211,7 +227,38 @@ function Header () {
           </Form.Item>
         </Form>
       </Modal>
+      <Modal
+        title={addLocalRepoDialogTitle}
+        visible={showAddLocalRepoDialog}
+        onOk={addLocalRepo}
+        okText="确定"
+        cancelText="取消"
+        onCancel={()=>setShowAddLocalRepoDialog(false)}
+      >
+        <Form.Item label="本地仓库路径">
+          <Input 
+            type="file" 
+            webkitdirectory="true" // 读取文件夹而不是文件
+            directory="true" // 读取文件夹而不是文件
+            onInput={(e) => readDirPath(e)} 
+            id="read-dir2"/>
+          <label 
+            htmlFor="read-dir2" 
+            id="read-dir-path">
+            <Input 
+              type="text" 
+              ref={inputShowDirPath}
+              value={localFolder}
+              id="show-dir-path" 
+              className="input"></Input>
+            <img src={moreIcon} id="more-icon"/>
+            </label>
+        </Form.Item>
+      </Modal>
       <img src={AddImg} onClick={()=>setShowAddRepoDialog(true)} id="add-repo-button"/>
+      <div id="add-local-repo">
+          <img src={localFileImg} onClick={()=>setShowAddLocalRepoDialog(true)}/>
+      </div>
       <div id='history-repos-container'>
         <Dropdown 
           overlay={historyReposMenu(historyRepos_IDWidthuuid_and_Avatar)} 

@@ -25,6 +25,10 @@ img#add-repo-button:active{
   width:200px;
   margin: auto
 }
+#add-local-repo img{
+  width:30px;
+  margin: 0 20px;
+}
 img#github-icon{
   width:30px;
 }
@@ -37,9 +41,10 @@ img#more-icon{
 img#more-icon:active{
   background-color: #bbb;
 }
-input#read-dir{
+input#read-dir1, input#read-dir2{
   display: none
 }
+
 #read-dir-path{
   display: flex;
   justify-content: flex-start;
