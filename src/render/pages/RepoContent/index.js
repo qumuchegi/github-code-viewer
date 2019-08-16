@@ -12,6 +12,7 @@ import './index.css'
 function RepoContent ({repoIDWillShowContent, localRepoDirPath, fileShow2Editor_path}) {
   
   useEffect(() => {
+    console.log('为什么编译包功能缺失？？？？')
     Split(['#left-split', '#right-split'], {
       sizes: [10, 90],
       minSize: [100, 900],
