@@ -27,6 +27,7 @@
 const {github_token} = require('../../config')
 let client = github.client(github_token)
 ```
+⚠️注意：在开发完后，将项目代码 commit 到 GitHub 后，原来的 github token 会失效，这是因为 github 为了防止 代码中暴露的 token 会造成用户在GitHub 的数据被攻击而做的防御措施。所以开发中必须开发者自己新申请一个新的 token，否则请求 GitHub 的 API 会返回 `Bad credicial`
 
 ## 打包发布
 
@@ -35,7 +36,7 @@ let client = github.client(github_token)
 
 1. 使用递归解决了目录树的文件内容的读取和文件树在页面的渲染：
 
->递归读取文件树的代码请看[这里](https://github.com/qumuchegi/github-code-viewer/blob/e1ba1e63f6f38f5e70693df426da38f3a2c20e1d/src/main/server-routes/middleweres.js#L83)，具体的原理是使用 promise 里的 fs 读取文件或者目录，fs 读取结果出来后 resolve 出读取结果，循环读取结果里面的文件，如果遇到目录就递归调用原来的读取文件的 promise ，知道不再有文件就 resolve 出整个读取结果。
+>递归读取文件树的代码请看[这里](https://github.com/qumuchegi/github-code-viewer/blob/e1ba1e63f6f38f5e70693df426da38f3a2c20e1d/src/main/server-routes/middleweres.js#L83)，具体的原理是使用 promise 里的 fs 读取目录，fs 读取目录结果出来后 resolve 出读取结果，循环读取里面的文件，如果遇到目录就递归调用原来用于读取目录的 promise ，直到不再有可读取的文件就 resolve 出整个读取结果。为什么要把fs读取目录的逻辑嵌套在一个 promise 里呢，这是因为在 fs 读取目录时使用了异步读取，只有父级目录读取完才能得到下面一级的目录，进而在 promise.then 之后继续读取下一级的目录。
 
 >下面是递归渲染文件树：
 
