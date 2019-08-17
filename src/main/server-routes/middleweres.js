@@ -84,6 +84,7 @@ readLocalDir_OR_FileWithPath = ({path: localpath}) => {
   return new Promise((resolve, reject) => {
    
     readDir(localpath).then(resPathArr => {
+      console.log("最后返回的文件：", resPathArr)
       resolve(resPathArr)
     })
 
@@ -92,9 +93,13 @@ readLocalDir_OR_FileWithPath = ({path: localpath}) => {
       return new Promise((resolve_1, reject_1) => {
         try{
           fs.readdir(localpath,{ withFileTypes:true },(err, filesORDirs) => {
+            
             //console.log('读取path: ', filesORDirs) 
             //console.log(filesORDirs)
-            if ( !filesORDirs ) return reject_1(err)
+            if ( err || filesORDirs.length===0 ) {
+              console.log(localpath)
+              return resolve_1([])
+            }
             let length = filesORDirs.length
             //console.log('length: ', length)
             let withTypeFromSymbol = []
@@ -102,6 +107,7 @@ readLocalDir_OR_FileWithPath = ({path: localpath}) => {
               let type = el[Object.getOwnPropertySymbols(el)[0]]
               //console.log(el.name)
               if (type === 1) { // 文件
+                console.log('文件: ', el.name)
                 el = {
                   name: el.name,
                   type,
@@ -115,19 +121,26 @@ readLocalDir_OR_FileWithPath = ({path: localpath}) => {
                 }
               } else { // 文件夹
                 console.log('文件夹: ', el.name)
-                if(el.name === 'node_modules' || el.name === '.git') {
+                let ignoreDirNames = ['node_modules', '.git', '.vscode', 'font-awesome-4.7.0']
+                if(ignoreDirNames.includes(el.name)) {
                   --length
+                  console.log('变化中的 length 1111111: ', length)
+                  if(length === 0) {
+                    resolve_1(withTypeFromSymbol)
+                  }
                 }// 跳过 node_modules
                 else
                 readDir(localpath + '/' + el.name)
                 .then(pathsarr => {
-                  el = {
-                    name: el.name,
-                    type,
-                    path: localpath + '/' + el.name,
-                    pathsArr: pathsarr
+                  if(pathsarr) {
+                    el = {
+                      name: el.name,
+                      type,
+                      path: localpath + '/' + el.name,
+                      pathsArr: pathsarr
+                    }
+                    withTypeFromSymbol.push(el)
                   }
-                  withTypeFromSymbol.push(el)
                   --length
                   //console.log('变化中的 length: ', length)
                   if(length === 0) {

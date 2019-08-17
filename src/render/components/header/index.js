@@ -203,7 +203,7 @@ function Header () {
             <Input 
               type="text" 
               placeholder='https://github.com/[username]/[reponame].git'
-              onChange={cancelGetRepo} 
+              onInput={e=>setRepoUrl(e.target.value)}
               className="input"/>
           </Form.Item>
           <Form.Item label="本地文件夹">
