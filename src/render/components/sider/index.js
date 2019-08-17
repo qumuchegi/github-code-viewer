@@ -28,7 +28,7 @@ function Sider ({repoIDWillShowContent, localRepoDirPath}) {
   const [repoInfo, setRepoInfo] = useState(null)
 
   useEffect(() => {
-    console.log(repoIDWillShowContent)
+    console.log('111111111',{repoIDWillShowContent,localRepoDirPath})
     if(!repoIDWillShowContent) {
       setDirPaths([])
       setRepoInfo(null)
@@ -37,8 +37,10 @@ function Sider ({repoIDWillShowContent, localRepoDirPath}) {
   }, [repoIDWillShowContent, localRepoDirPath])
 
   function readLocalDirPath () {
+    console.log('00', repoIDWillShowContent)
     if (!repoIDWillShowContent) {
       if (localRepoDirPath) {
+        console.log('999999')
         let repoInfo = {repoName: localRepoDirPath}
         setRepoInfo(repoInfo)
 
@@ -51,6 +53,7 @@ function Sider ({repoIDWillShowContent, localRepoDirPath}) {
         })
       }
     } else {
+      
       let repoInfo = getRepoInfoFromRedux(repoIDWillShowContent)
       setRepoInfo(repoInfo)
       let repo_localPath = repoInfo.localFolder

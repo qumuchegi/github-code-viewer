@@ -93,14 +93,14 @@ readLocalDir_OR_FileWithPath = ({path: localpath}) => {
         try{
           fs.readdir(localpath,{ withFileTypes:true },(err, filesORDirs) => {
             //console.log('读取path: ', filesORDirs) 
-            console.log(filesORDirs)
-            if ( !filesORDirs ) return reject_1()
+            //console.log(filesORDirs)
+            if ( !filesORDirs ) return reject_1(err)
             let length = filesORDirs.length
             //console.log('length: ', length)
             let withTypeFromSymbol = []
             filesORDirs.forEach((el) => { // 需要把属性名为 symbol 类型的文件类型改成字符串类型
               let type = el[Object.getOwnPropertySymbols(el)[0]]
-    
+              //console.log(el.name)
               if (type === 1) { // 文件
                 el = {
                   name: el.name,
@@ -114,6 +114,11 @@ readLocalDir_OR_FileWithPath = ({path: localpath}) => {
                   resolve_1(withTypeFromSymbol)
                 }
               } else { // 文件夹
+                console.log('文件夹: ', el.name)
+                if(el.name === 'node_modules' || el.name === '.git') {
+                  --length
+                }// 跳过 node_modules
+                else
                 readDir(localpath + '/' + el.name)
                 .then(pathsarr => {
                   el = {

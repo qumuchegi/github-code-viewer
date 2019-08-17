@@ -99,7 +99,7 @@ app.on('activate', () => {
 
 for(let routeName in routes) {
   ipcMain.on(routeName, (e, params) => {
-    console.log(params)
+    console.log('params:', params)
     routes[routeName]({params, cb: (respond) => {
       e.sender.send(routeName, respond)}
     })
