@@ -1,6 +1,7 @@
 var github = require('octonode')
 var ipc_channel = require('../../const/ipc_channel')
 const {github_token} = require('../../config')
+const fs = require('fs')
 
 const {getABranchContent, readLocalDir_OR_FileWithPath, readAFile} = require('./middleweres')
 
@@ -37,7 +38,7 @@ module.exports = {
           default_branch, repoOwner, ownerID, ownerAvatar
         }
 
-        client.get('repos/' + username_reponame + '/branches', {},  (err, status, body, headers) => { // 获取所有分支数组
+        client.get('repos/' + username_reponame + '/branches', {},  async(err, status, body, headers) => { // 获取所有分支数组
           if (err) {
             console.log(err)
             throw err
@@ -45,6 +46,22 @@ module.exports = {
           else if(status === 200) {
             resBody = {...resBody, branches: body}
 
+            function writeRepoInfo(){
+              return new Promise((res,rej)=>{
+                let willWriteData = {}
+                for (let item in resBody) {
+                  willWriteData[item] = resBody[item]
+                }
+
+                let filePath = localFolder + '/extra-repo-info.json'
+                fs.writeFile(filePath, JSON.stringify(willWriteData), 'utf8', (err)=> {
+                  if(!err) res()
+                  //else rej(false) 
+                } )
+              })
+            }
+            await  writeRepoInfo()
+            
             getABranchContent({username_reponame, branchName: default_branch, localFolder}) // 获取仓库分支内容
             .then((success, err) => {
               if (err) throw err
@@ -77,6 +94,15 @@ module.exports = {
     var {path} = params
 
     readAFile({path, cb})
+  },
+
+  [ipc_channel.READ_LOCAL_REPO_INFO_FILE]: ({params, cb}) => {
+    fs.readFile(params.path, 'utf8', (err, data) => {
+      if(data) cb(JSON.parse(data))
+      else {// 没有 extra-repo-info.json 文件，说明不是使用此软件克隆的仓库
+        cb('没有 extra-repo-info.json 文件')
+      }
+    })
   }
   /*
   [ipc_channel.GET_USER_INFO]: ({params, cb}) => {

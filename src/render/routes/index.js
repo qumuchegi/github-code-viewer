@@ -8,7 +8,7 @@ import routesCatalogue from './catalogue'
 export default function Routers () {
      
     return (
-        <Router>
+        <Router basename="/main_window">
             <Switch>
                 {
                     routesCatalogue.map( route =>

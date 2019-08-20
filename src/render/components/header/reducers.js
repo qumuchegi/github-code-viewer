@@ -17,7 +17,7 @@ const repoIDWillShowContent = (state='', action) => {
   switch (action.type) {
     case 'SHOW_REPO_CONTENT': 
       return action.payload;
-    case 'HIDE_REPO_CONTENT':
+    case 'HIDE_REPO_CONTENT_BY_ID':
       return '';
     default: return state;
   }
@@ -26,7 +26,7 @@ const repoIDWillShowContent = (state='', action) => {
 const localRepoDirPath = (state="", action) => {
   switch (action.type) {
     case "ADD_DIR_REPO": return action.payload;
-    case "HIDE_REPO_CONTENT": return "";
+    case "HIDE_REPO_CONTENT_BY_PATH": return "";
     default: return state;
   }
 }

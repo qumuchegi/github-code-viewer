@@ -28,6 +28,15 @@ export default {
       //console.log('ipcRebder res: ', res)
       cb(res)
     })
+  },
+  readRepoInfoFile: ({path, cb}) => {
+    console.log({path,cb})
+    ipcRenderer.send(ipc_channel.READ_LOCAL_REPO_INFO_FILE, {path})
+
+    ipcRenderer.on(ipc_channel.READ_LOCAL_REPO_INFO_FILE, (e, res) => {
+      //console.log('ipcRebder res: ', res)
+      cb(res)
+    })
   }
   /*
   getGithubUserInfo: (username) => {

@@ -1,25 +1,24 @@
 var github = require('octonode')
 const {github_token} = require('../../config')
 let client = github.client(github_token)
-var fs = require('fs')
+const fs = require('fs')
 
-getABranchContent = ({username_reponame, localFolder, branchName, path=""}) => { // /repos/pksunkara/hub/branches/master
-  console.log({username_reponame, branchName, path})
+getABranchContent = async ({username_reponame, localFolder, branchName, path="", repoInfo}) => { // /repos/pksunkara/hub/branches/master
+  console.log({username_reponame, branchName, path});
   
   return new Promise((resolve, reject) => {
    client.get('repos/' + username_reponame + '/contents/' + path, {ref: branchName}, (err, status, body) => {
     if (err) reject(err)
     else if (status === 200) {
-
       Promise.all(
-          body.map(pathItem => 
-            new Promise((resolve, reject) => 
-              writeFileContent(resolve, reject, pathItem)
-            )
+        body.map(pathItem => 
+          new Promise((resolve, reject) => 
+            writeFileContent(resolve, reject, pathItem)
           )
         )
-        .then(() => resolve('递归读取分支内容成功'))
-        .catch(err => reject(err))
+      )
+      .then(() => resolve('递归读取分支内容成功'))
+      .catch(err => reject(err))
 
       function writeFileContent (resolve, reject, pathItem) {
         let {
@@ -30,12 +29,11 @@ getABranchContent = ({username_reponame, localFolder, branchName, path=""}) => {
           type  // 文件或者文件夹 类型 ‘file'/'dir'
         } = pathItem;
 
-        
         createDirOrFile(path, type)
 
         function createDirOrFile (path, type) {
           var localPath = localFolder + '/' + path
-          console.log(localPath)
+          //console.log(localPath)
           if (type === 'dir') {
             fs.mkdir(localPath, err => {
               if (err) {reject(`目录创建失败：${err}`)}
@@ -62,6 +60,7 @@ getABranchContent = ({username_reponame, localFolder, branchName, path=""}) => {
     }
   })
  })
+
 }
 
 getFileContentWithPath = ({username_reponame, path, branchName}) => { // 获取一个 path 下的文件内容（如果path是一个文件）或者目录 （如果path是一个目录）
@@ -84,7 +83,7 @@ readLocalDir_OR_FileWithPath = ({path: localpath}) => {
   return new Promise((resolve, reject) => {
    
     readDir(localpath).then(resPathArr => {
-      console.log("最后返回的文件：", resPathArr)
+      //console.log("最后返回的文件：", resPathArr)
       resolve(resPathArr)
     })
 
@@ -107,31 +106,46 @@ readLocalDir_OR_FileWithPath = ({path: localpath}) => {
               let type = el[Object.getOwnPropertySymbols(el)[0]]
               //console.log(el.name)
               if (type === 1) { // 文件
-                console.log('文件: ', el.name)
-                el = {
-                  name: el.name,
-                  type,
-                  path: localpath + '/' + el.name
-                }
-                withTypeFromSymbol.push(el)
-                --length
-                //console.log('变化中的 length: ', length)
-                if(length === 0) {
-                  resolve_1(withTypeFromSymbol)
-                }
-              } else { // 文件夹
-                console.log('文件夹: ', el.name)
-                let ignoreDirNames = ['node_modules', '.git', '.vscode', 'font-awesome-4.7.0']
-                if(ignoreDirNames.includes(el.name)) {
+                //console.log('文件: ', el.name)
+                let ignoreFileNames = ['extra-repo-info.json']
+                if(ignoreFileNames.includes(el.name)) {
                   --length
-                  console.log('变化中的 length 1111111: ', length)
+                  //console.log('变化中的 length 1111111: ', length)
                   if(length === 0) {
                     resolve_1(withTypeFromSymbol)
                   }
-                }// 跳过 node_modules
+                }// 跳过 extra-repo-info.json, 这个文件是额外加上去的，用于记录从远端克隆下来的仓库信息
+                else {
+                  el = {
+                    name: el.name,
+                    type,
+                    path: localpath + '/' + el.name
+                  }
+                  withTypeFromSymbol.push(el)
+                  --length
+                  //console.log('变化中的 length: ', length)
+                  if(length === 0) {
+                    resolve_1(withTypeFromSymbol)
+                  }
+                }
+              } else { // 文件夹
+                //console.log('文件夹: ', el.name)
+                let ignoreDirNames = ['node_modules']
+                if(ignoreDirNames.includes(el.name)) {
+                  --length
+                  //console.log('变化中的 length 1111111: ', length)
+                  if(length === 0) {
+                    resolve_1(withTypeFromSymbol)
+                  }
+                }// 跳过 node_modules 
                 else
                 readDir(localpath + '/' + el.name)
                 .then(pathsarr => {
+
+                  if(el.name==='.git') {
+                    console.log('.git: ', pathsarr)
+                  }
+
                   if(pathsarr) {
                     el = {
                       name: el.name,

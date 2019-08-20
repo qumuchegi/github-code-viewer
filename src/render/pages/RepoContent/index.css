@@ -6,13 +6,16 @@
   width:100%;
   height: calc(100% - 4rem);
 }
-#left-split,#right-split{
+#left-split{
   height:100%;
-  min-width: 200px;
-  width: 100%;
+  min-width: 230px;
+}
+#right-split{
+  height:100%;
+  min-width: 670px;
 }
 .show{
-  display: block;
+  display: flex;
 }
 .hide{
   display: none !important;
@@ -21,4 +24,19 @@ img#start-app-img{
   display: block;
   width: 600px;
   margin: auto;
+}
+#login-for-token{
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  margin: auto;
+}
+#login-for-token #username, #login-for-token #password{
+  margin:10px;
+}
+
+.gutter.gutter-horizontal {
+  cursor: ew-resize;
 }

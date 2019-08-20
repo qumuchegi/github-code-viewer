@@ -4,6 +4,7 @@
   border-right: solid 1.2px #bbb;
 }
 #sider #repo-name-container>div{
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -18,4 +19,50 @@
 }
 #sider #repo-icon{
   width: 20px;
+}
+#sider #repo-name-container>div:hover .tab{
+  display: block;
+}
+.tab{
+  display: none;
+  position: absolute;
+  z-index: 1;
+  
+  height: 2rem;
+  width: 2rem;
+  
+  background-color: white;
+}
+#repo-info-button{
+  top:0;
+  right:4rem;
+}
+#dir-tree{
+  top:0;
+  right:2rem;
+}
+#remove-repo-img{
+  top:0;
+  right:0px;
+}
+.tab img{
+  display: block;
+  box-sizing: border-box;
+  width:1rem;
+  height: 1rem;
+  border-radius: 1rem;
+  margin:.5rem;
+}
+.tab img:hover{
+  border:solid 2px #eee
+}
+.tab #selected{
+  border:solid 1px black;
+  padding: 2px;
+}
+.show-tab{
+  display: block;
+}
+.hide-tab{
+  display: none
 }

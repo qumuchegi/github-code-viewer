@@ -2,7 +2,7 @@ import RepoContent from '../pages/RepoContent'
 
 export default [
     {
-        path: '/main_window',
+        path: '/',
         exact: true,
         component: RepoContent
     },

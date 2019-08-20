@@ -15,9 +15,13 @@ export default {
     type: 'REMOVE_A_REPO',
     payload: repoID
   }),
-  hideRepo: (repoID) => ({
-    type: 'HIDE_REPO_CONTENT',
+  hideRepoById: (repoID) => ({
+    type: 'HIDE_REPO_CONTENT_BY_ID',
     payload: repoID
+  }),
+  hideRepoByPath: (repoPath) => ({
+    type: 'HIDE_REPO_CONTENT_BY_PATH',
+    payload: repoPath
   }),
   addLocalRepo: (dirPath) => ({
     type: 'ADD_DIR_REPO',

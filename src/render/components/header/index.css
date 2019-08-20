@@ -9,7 +9,7 @@
   border-bottom: solid 1px #aaa;
   margin-bottom: 0px;
 }
-img#add-repo-button{
+img#add-repo-button,#add-local-repo img{
   display: block;
   box-sizing: content-box;
   width:30px;
@@ -17,6 +17,7 @@ img#add-repo-button{
   border-radius: 15px;
   padding:3px;
   background-color: white;
+  margin-right: 10px;
 }
 img#add-repo-button:active{
   background-color: #aaa
@@ -25,9 +26,9 @@ img#add-repo-button:active{
   width:200px;
   margin: auto
 }
-#add-local-repo img{
-  width:30px;
-  margin: 0 20px;
+
+#add-local-repo img:active{
+  background-color: #aaa
 }
 img#github-icon{
   width:30px;

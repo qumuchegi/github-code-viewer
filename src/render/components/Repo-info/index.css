@@ -1,0 +1,50 @@
+#repo-info-body{
+  padding: 5px;
+}
+#repo-info-body img{
+  display: block;
+  width:20px
+}
+#repo-owner-info img{
+  border-radius: 4px;
+  margin-right: 4px;
+}
+#repo-owner-info{
+  padding: 5px;
+  display: flex;
+  justify-content: flex-start;
+  border:solid 1px #bbb;
+}
+#repo-sample-info{
+  padding: 5px;
+  border:solid 1px #bbb;
+}
+#repo-description{
+  font-size: .7rem;
+  margin:9px;
+}
+#repo-fork-watch{
+  display: flex;
+  margin: 6px;
+  justify-content: space-around;
+}
+#repo-fork-watch>div{
+  display: flex;
+  justify-content: flex-start;
+}
+.key{
+  font-weight: bold;
+  font-size: .8rem;
+  margin-right: 10px
+}
+.value{
+  font-size: .6rem;
+  color: #aaa
+}
+.branch-name{
+  background-color: #888;
+  color: white;
+  border-radius: 4px;
+  padding: 3px;
+  font-size: .7rem;
+}

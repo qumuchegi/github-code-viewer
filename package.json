@@ -7,6 +7,7 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
+    "myPackage": "electron-packager .",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
@@ -24,12 +25,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "github_repo_viewer",
-            "iconUrl": "./app.ico",
-            "setupIcon": "./app.ico",
-            "description": "GitHub 仓库代码浏览",
-            "exe": "github_repo_viewer",
-            "version": "1.0.0"
+            "name": "github_code_viewer"
           }
         },
         {
@@ -40,38 +36,11 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {
-            "icon": "./app.ico",
-            "name": "github_repo_viewer",
-            "productDescription": "GitHub 仓库代码浏览",
-            "productName": "github_repo_viewer",
-            "version": "1.0.0"
-          }
+          "config": {}
         },
         {
           "name": "@electron-forge/maker-rpm",
-          "config": {
-            "icon": "./app.ico",
-            "description": "GitHub 仓库代码浏览",
-            "name": "github_repo_viewer",
-            "productDescription": "GitHub 仓库代码浏览",
-            "productName": "github_repo_viewer",
-            "version": "1.0.0"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-dmg",
-          "config": {
-            "format": "ULFO",
-            "name": "github_repo_viewer",
-            "icon": "./app.ico"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-appx",
-          "config": {
-            "expandedBaseImage": "./app.ico"
-          }
+          "config": {}
         }
       ],
       "plugins": [
@@ -97,7 +66,6 @@
   "dependencies": {
     "@electron-forge/maker-pkg": "^6.0.0-beta.44",
     "@uiw/react-codemirror": "^1.0.26",
-    "D": "^1.0.0",
     "antd": "^3.21.4",
     "codemirror": "^5.48.2",
     "electron-squirrel-startup": "^1.0.0",
@@ -130,6 +98,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "css-loader": "^3.0.0",
     "electron": "6.0.0",
+    "electron-packager": "^14.0.4",
     "file-loader": "^4.2.0",
     "less-loader": "^5.0.0",
     "node-loader": "^0.6.0",

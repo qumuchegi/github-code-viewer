@@ -7,6 +7,7 @@ import uuid from 'uuid'
 import api from '../../api'
 
 import './index.css'
+
 import AddImg from '../../../static/cloud download.png'
 import githubIcon from '../../../static/github.png'
 import moreIcon from '../../../static/more.png'
@@ -20,8 +21,9 @@ let {
   dispatch_storeHistoryRepos,
   dispatch_showRepoContent,
   dispatch_removeARepo,
-  dispatch_hideRepo,
-  dispatch_addLocalRepo
+  dispatch_hideRepo_byId,
+  dispatch_addLocalRepo,
+  dispatch_hideRepo_byPath
 } = dispatches
 
 import storeMethods from './store'
@@ -130,17 +132,18 @@ function Header () {
     //console.log(getAllReposInfoFromRedux())
     localStorage.removeItem(id)
     dispatch_removeARepo(id)
-    dispatch_hideRepo(id)
+    dispatch_hideRepo_byId(id)
     let newRepos = historyRepos_IDWidthuuid_and_Avatar.filter(el => el.id !== id)
     setHistoryRepos_IDWidthuuid_and_Avatar(newRepos)
 
   }
 
   function addLocalRepo() {
-    console.log(localFolder)
+    console.log('编译出错：',localFolder)
     dispatch_addLocalRepo(localFolder)
     setShowAddLocalRepoDialog(false)
     setLocalFolder('')
+    dispatch_hideRepo_byId()
   }
 
   const getRepoDialogTitle = 

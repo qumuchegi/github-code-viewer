@@ -4,5 +4,6 @@ module.exports = {
     GET_REPO: 'get-a-repo',
     //LOGIN_GITHUB: 'login-github',
     READ_LOCAL_PATH: 'read-local-path',
-    READ_LOCAL_FILE: 'read-local-file'
+    READ_LOCAL_FILE: 'read-local-file',
+    READ_LOCAL_REPO_INFO_FILE: 'read-repo-info-file'
 }
