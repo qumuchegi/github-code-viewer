@@ -49,7 +49,7 @@ export default function RepoInfo ({repoInfo}) {
             <span className='value'>{repoInfo.updated_at}</span>
           </div>
           <div>
-          <span className='key'>发布于</span>
+          <span className='key'>最早发布</span>
           <span className='value'>{repoInfo.created_at}</span>
           </div>
         </div>

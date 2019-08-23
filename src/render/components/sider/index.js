@@ -65,6 +65,7 @@ function Sider ({repoIDWillShowContent, localRepoDirPath}) {
     readDirAndFile({
       path: localRepoDirPath, 
       cb:(res) => {
+        console.log(res)
         setDirPaths(res)
       }
     })
@@ -93,6 +94,7 @@ function Sider ({repoIDWillShowContent, localRepoDirPath}) {
   }
 
   function getRepoInfo (repoLocalPath) {
+    //let token = localStorage.getItem('github-token')
     readRepoInfoFile({path: repoLocalPath+'/extra-repo-info.json', cb: (res) => {
       console.log('仓库信息：', res)
       if(typeof res === 'object') setRepoInfo(res) 

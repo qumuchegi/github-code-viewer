@@ -53,9 +53,12 @@ function Header () {
   function getRepo () {
     if (!repoUrl || !localFolder) return message.warning('请输入GitHub仓库 URL 和 本地地址', 2, ()=>inputShowDirPath.current.focus())
 
+    let token = localStorage.getItem('github-token')
+    if(!token) return message.warning('请先登录 github 以获取 token', 2)
+    
     setCloneLoding(true)
     api.getRepo({
-      repoUrl, localFolder, 
+      repoUrl, localFolder, token,
       cb: (res) => {
         console.log('header res:', res)
         let { branches,  has_projects, repoID, repoName,
@@ -98,6 +101,8 @@ function Header () {
     let historyRepos = [], historyRepos_IDWidthuuid_and_Avatar = []
     for (let i=0; i<length_of_localStorage; i++) {
       let key = localStorage.key(i) // key 即 repoID
+      let skip = ['github-token', 'id', 'username', 'password']
+      if(skip.includes(key)) continue // 跳过登录过返回存储在 localStorage 里的用户 token 和 id 、username、password
       let repo = JSON.parse(localStorage.getItem(key))
 
       console.log('localStorage 读到 Redux:', repo)

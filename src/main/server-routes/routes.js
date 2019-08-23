@@ -1,15 +1,43 @@
 var github = require('octonode')
 var ipc_channel = require('../../const/ipc_channel')
-const {github_token} = require('../../config')
 const fs = require('fs')
 
 const {getABranchContent, readLocalDir_OR_FileWithPath, readAFile} = require('./middleweres')
 
 module.exports = {
+  [ipc_channel.LOGIN_GITHUB]: ({params, cb}) => {
+    let {username, password} = params
+
+    var scopes = {
+      'scopes': ['user', 'repo', 'gist'],
+      'note': 'admin script'
+    }
+    
+    github.auth.config({
+      username,
+      password
+    }).login(scopes, function (err, id, token, headers) {
+      console.log(id, token)
+      if(!err) cb({id, token})
+    })
+  },
+
+  [ipc_channel.LOGOUT_GITHUB]: ({params, cb}) => {
+    let {username, password, id} = params
+
+    github.auth.config({
+      username,
+      password
+    }).revoke(id, function (err) {
+      if (err) throw err
+      else cb({msg: '已经退出登录'})
+    })
+  },
+
   [ipc_channel.GET_REPO]: ({params, cb}) => {
     let resBody
-    const {repoUrl, localFolder} = params
-    let client = github.client(github_token)
+    const {repoUrl, localFolder, token} = params
+    let client = github.client(token)
     let [,,,username, reponame] = repoUrl.split('/')
     reponame = reponame.replace(/\.git/,'')
     let username_reponame = [username,reponame].join('/')
@@ -62,7 +90,7 @@ module.exports = {
             }
             await  writeRepoInfo()
             
-            getABranchContent({username_reponame, branchName: default_branch, localFolder}) // 获取仓库分支内容
+            getABranchContent({username_reponame, branchName: default_branch, localFolder, token}) // 获取仓库分支内容
             .then((success, err) => {
               if (err) throw err
               else {

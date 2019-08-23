@@ -1,11 +1,11 @@
 var github = require('octonode')
-const {github_token} = require('../../config')
-let client = github.client(github_token)
+
 const fs = require('fs')
 
-getABranchContent = async ({username_reponame, localFolder, branchName, path="", repoInfo}) => { // /repos/pksunkara/hub/branches/master
-  console.log({username_reponame, branchName, path});
-  
+getABranchContent = async ({username_reponame, localFolder, branchName, path="", token}) => { // /repos/pksunkara/hub/branches/master
+  console.log({username_reponame, branchName, path, token});
+  let client = github.client(token)
+
   return new Promise((resolve, reject) => {
    client.get('repos/' + username_reponame + '/contents/' + path, {ref: branchName}, (err, status, body) => {
     if (err) reject(err)
@@ -43,7 +43,7 @@ getABranchContent = async ({username_reponame, localFolder, branchName, path="",
               }
             })
           } else if (type === 'file') {
-            getFileContentWithPath({username_reponame,  path , branchName})
+            getFileContentWithPath({username_reponame,  path , branchName, token})
             .then(fileContent => {
               fs.writeFile(localPath,fileContent, 'utf8', err => {
                 if (err) {
@@ -63,7 +63,8 @@ getABranchContent = async ({username_reponame, localFolder, branchName, path="",
 
 }
 
-getFileContentWithPath = ({username_reponame, path, branchName}) => { // 获取一个 path 下的文件内容（如果path是一个文件）或者目录 （如果path是一个目录）
+getFileContentWithPath = ({username_reponame, path, branchName, token}) => { // 获取一个 path 下的文件内容（如果path是一个文件）或者目录 （如果path是一个目录）
+  let client = github.client(token)
   return new Promise((resolve, reject) => {
     client.get('repos/' + username_reponame + '/contents/' + path, {ref: branchName}, (err, status, body) => {
       if (err) {

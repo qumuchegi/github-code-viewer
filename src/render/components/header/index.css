@@ -14,9 +14,7 @@ img#add-repo-button,#add-local-repo img{
   box-sizing: content-box;
   width:30px;
   height: 30px;
-  border-radius: 15px;
   padding:3px;
-  background-color: white;
   margin-right: 10px;
 }
 img#add-repo-button:active{

@@ -1,1 +1,0 @@
-export const github_token = '16cd5a959521848f4c2ff1bb6b2dad8627b71707'

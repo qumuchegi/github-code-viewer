@@ -1,8 +1,8 @@
 module.exports = {
     //GET_USER_INFO: 'github-user-info', // 获取 GitHub 用户的信息
-    //GET_REPOS: 'sertain-repo', // 获取一个仓库的所有信息，包括仓库里面各个文件的代码，然后保存在本地文件夹里
+    LOGIN_GITHUB: 'login-github-for-token', // 登录 GitHub 以获取 token
+    LOGOUT_GITHUB: 'logout-and-revoke-token', // 退出登录并销毁 token
     GET_REPO: 'get-a-repo',
-    //LOGIN_GITHUB: 'login-github',
     READ_LOCAL_PATH: 'read-local-path',
     READ_LOCAL_FILE: 'read-local-file',
     READ_LOCAL_REPO_INFO_FILE: 'read-repo-info-file'

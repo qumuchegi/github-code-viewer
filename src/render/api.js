@@ -3,8 +3,26 @@ var { ipcRenderer } = electron
 import ipc_channel from '../const/ipc_channel'
 
 export default {
-  getRepo: ({repoUrl, localFolder, cb}) => {
-    ipcRenderer.send(ipc_channel.GET_REPO, {repoUrl, localFolder})
+  loginGithub: ({username, password, cb}) => { // 登录 github 以创建一个 token
+    ipcRenderer.send(ipc_channel.LOGIN_GITHUB, {username, password})
+
+    ipcRenderer.on(ipc_channel.LOGIN_GITHUB, (e, res) => {
+
+      console.log('ipcRebder res: ', res)
+
+      cb(res)
+
+    })
+  },
+  logoutGithub: ({username, password, id, cb}) => {
+    ipcRenderer.send(ipc_channel.LOGOUT_GITHUB, {username, password, id})
+
+    ipcRenderer.on(ipc_channel.LOGOUT_GITHUB, (e, res) => {
+      cb(res)
+    })
+  },
+  getRepo: ({repoUrl, localFolder, token, cb}) => {
+    ipcRenderer.send(ipc_channel.GET_REPO, {repoUrl, localFolder, token})
 
     ipcRenderer.on(ipc_channel.GET_REPO, (e, res) => {
       //console.log('ipcRebder res: ', res)
@@ -56,22 +74,6 @@ export default {
     })
   },
  */
-
-  /*
-  loginGithub: ({username, password}) => {
-    ipcRenderer.send(ipc_channel.LOGIN_GITHUB, {username, password})
-
-    ipcRenderer.on(ipc_channel.LOGIN_GITHUB, (e, res) => {
-
-      console.log('ipcRebder res: ', res)
-
-      let {id, token} = res
-
-      window.localStorage.setItem('id', id)
-      window.localStorage.setItem('token', token)
-
-    })
-  }
-  */
+  
 }
 

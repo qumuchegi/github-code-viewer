@@ -20,23 +20,37 @@
 .hide{
   display: none !important;
 }
+#start-app-container{
+  position: relative;
+}
 img#start-app-img{
   display: block;
   width: 600px;
   margin: auto;
 }
 #login-for-token{
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
+  background-color: rgb(136, 216, 236);
+  padding:20px;
   width: 300px;
   margin: auto;
 }
+#had-login{
+  width: 300px;
+  margin: auto
+}
+#login-for-token h3{
+  text-align: center
+}
 #login-for-token #username, #login-for-token #password{
-  margin:10px;
+  margin:5px 0px;
 }
 
 .gutter.gutter-horizontal {
   cursor: ew-resize;
+}
+.show-login-container{
+  display: block;
+}
+.hide-login-container{
+  display: none
 }
