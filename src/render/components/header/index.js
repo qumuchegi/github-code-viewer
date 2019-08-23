@@ -15,7 +15,7 @@ import historyImg from '../../../static/history.png'
 import devloperImg from '../../../static/devloper.png'
 import localFileImg from '../../../static/local.png'
 
-import dispatches from './dispatch'
+import header_dispatches from './dispatch'
 let {
   dispatch_storeNewRepo,
   dispatch_storeHistoryRepos,
@@ -24,7 +24,12 @@ let {
   dispatch_hideRepo_byId,
   dispatch_addLocalRepo,
   dispatch_hideRepo_byPath
-} = dispatches
+} = header_dispatches
+
+import prjTree_dispatches from '../prj-tree/dispatch'
+let {
+  dispatch_hide_fileContent
+} = prjTree_dispatches
 
 import storeMethods from './store'
 
@@ -55,7 +60,7 @@ function Header () {
 
     let token = localStorage.getItem('github-token')
     if(!token) return message.warning('请先登录 github 以获取 token', 2)
-    
+
     setCloneLoding(true)
     api.getRepo({
       repoUrl, localFolder, token,
@@ -127,12 +132,13 @@ function Header () {
   }
 
   function showRepoContent (repoID) {
+    dispatch_hide_fileContent()
     dispatch_showRepoContent(repoID)
-
     console.log('Redux 存储要现实内容的repoID:', getRepoIDWillShowContent())
   }
 
   function removeRepo(id) {
+    dispatch_hide_fileContent()
     console.log(id)
     //console.log(getAllReposInfoFromRedux())
     localStorage.removeItem(id)
@@ -144,6 +150,7 @@ function Header () {
   }
 
   function addLocalRepo() {
+    dispatch_hide_fileContent()
     console.log('编译出错：',localFolder)
     dispatch_addLocalRepo(localFolder)
     setShowAddLocalRepoDialog(false)

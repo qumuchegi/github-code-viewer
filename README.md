@@ -22,12 +22,12 @@
 
 1. 使用 [create-electron-app](https://www.electronforge.io/) 脚手架快速开始 electron 的开发环境: `npx create-electron-app Github-code-viewer --template=webpack`，使用 `npm start `启动编译运行 electron 应用. 
 
-2. 开发中为了增加 GitHub API 调用上限，需要到github的setting > develop > generate token，创建一个token，然后在发起 API 请求前设置 token：
+~~2. 开发中为了增加 GitHub API 调用上限，需要到 github 的 setting > developer settings > Personal access tokens，创建一个token，然后在发起 API 请求前设置 token~~（*这个我改成了用户登录时获取token，不用开发者自己到 github 申请 token*）：
 ```js
 const {github_token} = require('../../config')
 let client = github.client(github_token)
 ```
-⚠️注意：在开发完后，将项目代码 commit 到 GitHub 后，原来的 github token 会失效，这是因为 github 为了防止 代码中暴露的 token 会造成用户在GitHub 的数据被攻击而做的防御措施。所以开发中必须开发者自己新申请一个新的 token，否则请求 GitHub 的 API 会返回 `Bad credicial`
+⚠️注意：在开发完后，将项目代码 commit 到 GitHub 后，原来的 github token 会失效，这是因为 github 为了防止 代码中暴露的 token 会造成用户在GitHub 的数据被攻击而做的防御措施。所以 commit 后，开发中必须开发者自己新申请一个新的 token，否则请求 GitHub 的 API 会返回 `Bad credicial`。这个问题现在不用开发者重复申请 token 了，因为我已经改成用户登录时自动获取 token，之后克隆远程仓库等都会使用这个 token。
 
 ## 打包发布
 
@@ -88,6 +88,7 @@ function dynamicCreateChildrenTree (dirPaths) { // 使用递归 动态生成子�
 <img src='./prj-dev-Doc-Material/bug1.png' style="width: 400px"/>
 <img src='./prj-dev-Doc-Material/bug2.png' style="width: 400px"/>
 </div>
+
 >这个应该是路由问题，针对这个问题，我采取了妥协办法，即不再使用 React router，而是直接用下面的内容组件取代原来的路由：
 
 ```js
@@ -99,5 +100,5 @@ function dynamicCreateChildrenTree (dirPaths) { // 使用递归 动态生成子�
 ```
 这样就解决了。
 
-这样后，发现了另一个问题，就是代码编辑器的样式没有了，直接背景变成了白色：
+这样后，发现了另一个问题，就是代码编辑器的样式没有了，直接背景变成了白色,应该是引入的编辑器的问题：
 <img src='./prj-dev-Doc-Material/bug3.png' style="width: 600px"/>
