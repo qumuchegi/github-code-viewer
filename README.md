@@ -2,6 +2,8 @@
 
 使用 Electron 和 React 制作的一个可以克隆 github 仓库代码，并生成文件树查看的代码阅读器（支持本地仓库文件查看）
 
+![](./prj-dev-Doc-Material/electron-app.png)
+
 ## 技术栈
 
 1. 框架：

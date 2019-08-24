@@ -7,11 +7,7 @@ export default {
     ipcRenderer.send(ipc_channel.LOGIN_GITHUB, {username, password})
 
     ipcRenderer.on(ipc_channel.LOGIN_GITHUB, (e, res) => {
-
-      console.log('ipcRebder res: ', res)
-
       cb(res)
-
     })
   },
   logoutGithub: ({username, password, id, cb}) => {
@@ -25,16 +21,13 @@ export default {
     ipcRenderer.send(ipc_channel.GET_REPO, {repoUrl, localFolder, token})
 
     ipcRenderer.on(ipc_channel.GET_REPO, (e, res) => {
-      //console.log('ipcRebder res: ', res)
       cb(res)
     })
   },
   readDirAndFile: ({path,cb}) => {
-    //console.log({path,cb})
     ipcRenderer.send(ipc_channel.READ_LOCAL_PATH, {path})
 
     ipcRenderer.on(ipc_channel.READ_LOCAL_PATH, (e, res) => {
-      //console.log('ipcRebder res: ', res)
       cb(res)
     })
   },
@@ -43,7 +36,6 @@ export default {
     ipcRenderer.send(ipc_channel.READ_LOCAL_FILE, {path})
 
     ipcRenderer.on(ipc_channel.READ_LOCAL_FILE, (e, res) => {
-      //console.log('ipcRebder res: ', res)
       cb(res)
     })
   },
@@ -52,7 +44,6 @@ export default {
     ipcRenderer.send(ipc_channel.READ_LOCAL_REPO_INFO_FILE, {path})
 
     ipcRenderer.on(ipc_channel.READ_LOCAL_REPO_INFO_FILE, (e, res) => {
-      //console.log('ipcRebder res: ', res)
       cb(res)
     })
   }
