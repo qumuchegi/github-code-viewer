@@ -81,26 +81,3 @@ function dynamicCreateChildrenTree (dirPaths) { // 使用递归 动态生成子�
 ```
 
 2. 使用 React 模拟前端，Node.js 模拟后端 API，Electron 链接了两者，借用 Electron 的 ipc 进程通信模拟了 C/S 模式，main 进程模拟 S 服务，render 进程模拟 C 客户端，从而分理处清晰的项目逻辑结构。
-
-## 疑问解决
-
-1. 打包应用的时候对图片不能用 file-loader, 只能用 url-loader 生成 data url, 否则应用里图片显示有问题。不知道原因？
-2. electron 打包后功能缺失，左边是没有打包的，右边是打包之后的，打包后原本应该显示图片的地方图片没有了，试了其他的功能，也谜一般的“消失了”:
-<div >
-<img src='./prj-dev-Doc-Material/bug1.png' style="width: 400px"/>
-<img src='./prj-dev-Doc-Material/bug2.png' style="width: 400px"/>
-</div>
-
->这个应该是路由问题，针对这个问题，我采取了妥协办法，即不再使用 React router，而是直接用下面的内容组件取代原来的路由：
-
-```js
-<Provider store={store}>
-  <Header/>
-  <RepoContent/>
-  {/*<Routers/>*/}
-</Provider>
-```
-这样就解决了。
-
-这样后，发现了另一个问题，就是代码编辑器的样式没有了，直接背景变成了白色,应该是引入的编辑器的问题：
-<img src='./prj-dev-Doc-Material/bug3.png' style="width: 600px"/>
