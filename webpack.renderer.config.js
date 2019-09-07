@@ -6,23 +6,6 @@ rules.push({
   use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
 })
 
-rules.push({
-  test: /\.less$/,
-  use: [
-    { loader: 'style-loader' }, 
-    { loader: 'css-loader' },
-    {
-      loader: 'less-loader',
-      options: {
-        modifyVars: {
-          'primary-color': '#1296db',
-        },
-        javascriptEnabled: true
-      }
-    }
-  ]
-})
-
 rules.push(
   {
     test: /\.(js|jsx)$/,

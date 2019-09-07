@@ -288,6 +288,7 @@ function Header () {
         <div id='arrow'></div>
         <div id="history-repos-avatars">
           {
+            historyRepos_IDWidthuuid_and_Avatar.length>0 &&
             historyRepos_IDWidthuuid_and_Avatar.map(el => 
               <img 
                 src={el.avatar} 

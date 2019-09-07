@@ -6,4 +6,64 @@
   border-radius: 0 !important;
   overflow-x: scroll !important;
 }
- 
+#md-viewer, #code-viewer{
+  height: 100%;
+  overflow: scroll;
+}
+#md-viewer blockquote{
+  margin:.6rem;
+  padding: .3rem;
+  background-color: #eee;
+  border-radius: .2rem
+}
+#md-viewer table{
+  border: solid 1.4px #ddd;
+  margin: .6rem;
+  padding: .7rem;
+}
+#md-viewer table thead{
+  background-color: #eee;
+  text-align: center;
+}
+#md-viewer table tbody tr:nth-child(2n){
+  background-color: #eee
+}
+#md-viewer table tbody td{
+  border: dashed 1px #eef;
+  padding: .8rem
+}
+#md-viewer pre{
+  padding: 1rem;
+  background-color: #111;
+  border-radius: 6px;
+  margin:.3rem;
+}
+#code-viewer pre{
+  padding: 1rem;
+  background-color: #111;
+  height: 100%;
+  margin: 0;
+}
+#md-viewer pre .hljs-keyword, #code-viewer{
+  color: rgb(205,52,196)
+}
+#md-viewer code, #code-viewer code{
+  color: rgb(224,59,70)
+}
+#md-viewer pre .hljs-comment, #code-viewer pre .hljs-comment{
+  color: gray
+}
+#md-viewer pre .hljs-params, #code-viewer pre .hljs-params{
+  color: rgb(221,178,91)
+}
+#md-viewer pre .hljs-title, #code-viewer pre .hljs-title{
+  color: rgb(72,123,239)
+}
+#md-viewer pre .hljs-string, #code-viewer pre .hljs-string{
+  color: rgb(123,189,92)
+}
+#md-viewer img{
+  width: calc(100% - 200px);
+  display: block;
+  margin: auto;
+}
