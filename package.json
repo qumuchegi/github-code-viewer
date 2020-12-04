@@ -67,7 +67,7 @@
     "@electron-forge/maker-pkg": "^6.0.0-beta.44",
     "antd": "^3.21.4",
     "electron-squirrel-startup": "^1.0.0",
-    "highlight.js": "^9.15.10",
+    "highlight.js": "^10.4.1",
     "octonode": "^0.9.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
